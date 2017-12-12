@@ -2,8 +2,8 @@
     "name": "youdao-translator",
     "displayName": "Youdao translator",
     "description": "Translate English to Chinese with Youdao.",
-    "version": "0.0.1",
-    "icon": "https://raw.githubusercontent.com/huturen/youdao-translator/master/img/icon.png",
+    "version": "0.0.2",
+    "icon": "img/icon.png",
     "publisher": "huren",
     "engines": {
         "vscode": "^1.18.0"
@@ -24,6 +24,10 @@
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/huturen/youdao-translator.git"
     },
     "devDependencies": {
         "typescript": "^2.6.1",
