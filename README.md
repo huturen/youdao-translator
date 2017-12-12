@@ -30,3 +30,7 @@ cmd+shift+p 调出命令面板， 输入 youdao translate，即可翻译选中�
 
 -----------------------------------------------------------------------------------------------------------
 
+## 赞助
+
+如果你觉得好用, 请赞助一下, 谢谢支持:
+![avatar](https://raw.githubusercontent.com/huturen/youdao-translator/master/img/weixin-payment.png)

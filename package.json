@@ -3,6 +3,7 @@
     "displayName": "Youdao translator",
     "description": "Translate English to Chinese with Youdao.",
     "version": "0.0.1",
+    "icon": "https://raw.githubusercontent.com/huturen/youdao-translator/master/img/icon.png",
     "publisher": "huren",
     "engines": {
         "vscode": "^1.18.0"
