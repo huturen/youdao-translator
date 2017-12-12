@@ -2,7 +2,7 @@
     "name": "youdao-translator",
     "displayName": "Youdao translator",
     "description": "Translate English to Chinese with Youdao.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "icon": "img/icon.png",
     "publisher": "huren",
     "engines": {
@@ -16,11 +16,20 @@
     ],
     "main": "./extension",
     "contributes": {
+        "keybindings": [
+            {
+                "command": "extension.youdaoTranslate",
+                "key": "meta+t",
+                "mac": "cmd+shift+t",
+                "when": "editorTextFocus"
+            }
+        ],
         "commands": [{
             "command": "extension.youdaoTranslate",
             "title": "Youdao Translate"
         }]
     },
+
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
