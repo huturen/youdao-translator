@@ -1,12 +1,34 @@
-// =============================================================================
-// 既然看到了这里那就交个朋友, 微信号: jiangnan-mam
-// =============================================================================
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
-const request = require('request');
+var vscode  = require('vscode');
+var request = require('request');
+var api     = 'http://dict.youdao.com/w/eng/';
+var cache   = {};
 
-const api = 'http://dict.youdao.com/w/eng/';
+
+
+function encodeText(text) {
+    return encodeURI(text.replace(/\/\//g, ' ').trim());
+}
+
+// 已经查询过的单词, mouseover会显示出来
+function hover() {
+    vscode.languages.registerHoverProvider('*', {
+        provideHover(document, position) {
+            let str  = document.getText(vscode.window.activeTextEditor.selection);
+            str = encodeText(str);
+            if (str !== '' && cache[str]) {
+                return new vscode.Hover(cache[str].replace('\n',': '));
+            } 
+
+            let str2 = document.getText(document.getWordRangeAtPosition(position));
+            str2 = encodeText(str2);
+            if (cache[str2]) {
+                return new vscode.Hover(cache[str2].replace('\n', ': '));
+            }
+        }
+    });
+}
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -31,11 +53,13 @@ function activate(context) {
         var text = editor.document.getText(selection);
 
         if (!text) return;
+        text = encodeText(text);
+        if (cache[text]) {
+            return vscode.window.showInformationMessage(cache[text], { modal: true });
+        }
 
-        text = text.replace(/\/\//g, ' ');
-        text = encodeURI(text) + '?t=' + (+new Date());
-        
-        request.get(api + text, function (err, res, body) {
+        var url  = api + text + '?t=' + (+new Date());
+        request.get(url, function (err, res, body) {
             if (err) {
                 return vscode.window.showInformationMessage('错误：' + err.message);
             }
@@ -48,6 +72,7 @@ function activate(context) {
                 );
                 if (msg !== body) {
                     msg = msg.replace(/<\/?\s?[^>]+>/g, '').replace(/\s+/g, ' ').replace('###', "\n").trim();
+                    cache[text] = msg;
                     return vscode.window.showInformationMessage(msg, { modal: true });
                 }
                 // 句子
@@ -61,6 +86,7 @@ function activate(context) {
                         .replace(/\s+/g, ' ').replace(/###/g, "\n")
                         .replace(/以上为机器翻译结果，长、整句建议使用 人工翻译.*/g, '')
                         .trim();
+                    cache[text] = msg;
                     return vscode.window.showInformationMessage(msg, { modal: true });
                 }
                 return vscode.window.showInformationMessage('错误：匹配翻译内容失败');
@@ -74,6 +100,7 @@ function activate(context) {
     });
 
     context.subscriptions.push(disposable);
+    hover();
 }
 exports.activate = activate;
 
