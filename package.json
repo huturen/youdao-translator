@@ -2,7 +2,7 @@
     "name": "youdao-translator",
     "displayName": "Youdao translator",
     "description": "Translate English to Chinese with Youdao.",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "icon": "img/icon.png",
     "publisher": "huren",
     "engines": {
@@ -44,5 +44,8 @@
         "eslint": "^4.6.1",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "request": "file:node_modules\\request"
     }
 }
