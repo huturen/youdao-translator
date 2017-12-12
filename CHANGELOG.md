@@ -1,7 +1,13 @@
 # Change Log
-All notable changes to the "youdao-translator" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [0.0.1]
 
-## [Unreleased]
-- Initial release
+- 初始版本
+
+## [0.0.2]
+
+- 添加图片
+
+## [0.0.3]
+
+- 添加快捷键
