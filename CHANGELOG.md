@@ -34,4 +34,8 @@
 
 ## [0.10.4]
 
-- npm使用新版(npm -g install npm)，解决boom依赖问题
+- npm使用新版，解决boom依赖问题
+
+## [0.10.5]
+
+- logo白边问题
