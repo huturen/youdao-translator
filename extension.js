@@ -8,7 +8,7 @@ var cache   = {};
 
 
 function encodeText(text) {
-    return encodeURI(text.replace(/\/\//g, ' ').trim());
+    return encodeURI(text.replace(/['"]/g, '').replace(/\/\//g, ' ').trim());
 }
 
 // 已经查询过的单词, mouseover会显示出来
