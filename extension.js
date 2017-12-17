@@ -5,8 +5,6 @@ var request = require('request');
 var api     = 'http://dict.youdao.com/w/eng/';
 var cache   = {};
 
-
-
 function encodeText(text) {
     return encodeURI(text.replace(/['"]/g, '').replace(/\/\//g, ' ').trim());
 }
@@ -30,6 +28,27 @@ function hover() {
     });
 }
 
+function result(msg, url) {
+    if (!result.channel) {
+        result.channel = vscode.window.createOutputChannel('youdao-translator');
+    }
+    
+    // result.channel.clear(); 
+    result.channel.appendLine(msg + '\n参考连接: ' + url + 
+        '\n=========================================\n');
+    // result.channel.hide()
+
+    vscode.window.showInformationMessage(msg, {modal: true}, '历史输出', '参考连接')
+        .then(function(str){
+            if (str === '历史输出') {
+                result.channel.show();
+            }
+            else if (str === '参考连接') {
+                vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(url));
+            }
+        });
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -37,11 +56,10 @@ function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "youdao-translator" is now active!');
-
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.youdaoTranslate', function () {
+    var disposable = vscode.commands.registerCommand('extension.youdaoTranslate', function () {
         // The code you place here will be executed every time your command is executed
         var editor = vscode.window.activeTextEditor;
 
@@ -54,15 +72,12 @@ function activate(context) {
 
         if (!text) return;
         text = encodeText(text);
-        if (cache[text]) {
-            return vscode.window.showInformationMessage(cache[text], { modal: true });
-        }
+        var url = api + text;
 
-        var url  = api + text + '?t=' + (+new Date());
+        if (cache[text]) return result(cache[text], url);
+        
         request.get(url, function (err, res, body) {
-            if (err) {
-                return vscode.window.showInformationMessage('错误：' + err.message);
-            }
+            if (err) return result('错误：' + err.message, url);
             try {
                 // 单词
                 // <h2 class="wordbook-js">...<div class="trans-container">...</div>
@@ -73,7 +88,7 @@ function activate(context) {
                 if (msg !== body) {
                     msg = msg.replace(/<\/?\s?[^>]+>/g, '').replace(/\s+/g, ' ').replace('###', "\n").trim();
                     cache[text] = msg;
-                    return vscode.window.showInformationMessage(msg, { modal: true });
+                    return result(msg, url);
                 }
                 // 句子
                 // <div id="fanyiToggle">...</div>
@@ -87,12 +102,12 @@ function activate(context) {
                         .replace(/以上为机器翻译结果，长、整句建议使用 人工翻译.*/g, '')
                         .trim();
                     cache[text] = msg;
-                    return vscode.window.showInformationMessage(msg, { modal: true });
+                    return result(msg, url);
                 }
-                return vscode.window.showInformationMessage('错误：匹配翻译内容失败');
+                return result('错误：匹配翻译内容失败', url);
 
             } catch (e) {
-                vscode.window.showInformationMessage('错误：' + e.message);
+                return result('错误：' + e.message, url);
             }
 
         });
