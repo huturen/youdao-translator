@@ -8,6 +8,8 @@
 
 ![screenshot](img/screenshot3.png)
 
+![screenshot](img/screenshot4.png)
+
 ## 特性
 
 1. 翻译单词

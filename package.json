@@ -2,7 +2,7 @@
     "name": "youdao-translator",
     "displayName": "Youdao translator",
     "description": "Translate English to Chinese with Youdao.",
-    "version": "0.10.6",
+    "version": "0.10.7",
     "icon": "img/icon.png",
     "publisher": "huren",
     "engines": {
