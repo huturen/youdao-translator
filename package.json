@@ -29,7 +29,17 @@
                 "command": "extension.youdaoTranslate",
                 "title": "Youdao Translate"
             }
-        ]
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "extension.youdaoTranslate",
+                    "title": "Youdao Translate",
+                    "when": "editorHasSelection",
+                    "group": "9_cutcopypaste@1"
+                }
+            ]
+        }
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",

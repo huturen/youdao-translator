@@ -10,6 +10,8 @@
 
 ![screenshot](img/screenshot4.png)
 
+![screenshot](img/screenshot5.png)
+
 ## 特性
 
 1. 翻译单词
@@ -17,6 +19,7 @@
 3. 支持音标展示
 4. 查询缓存
 5. 查询过的单词, mouseover会显示出来
+6. 翻译中文
 
 
 ## 使用方法

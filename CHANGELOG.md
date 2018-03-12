@@ -47,3 +47,8 @@
 ## [0.10.8]
 
 - 小更新
+
+## [0.10.9]
+
+- 右键点击翻译
+- https://github.com/huturen/youdao-translator/issues/2
