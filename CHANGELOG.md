@@ -52,3 +52,8 @@
 
 - 右键点击翻译
 - https://github.com/huturen/youdao-translator/issues/2
+
+## [0.11.0]
+
+- 更新说明
+- https://github.com/huturen/youdao-translator/issues/2
